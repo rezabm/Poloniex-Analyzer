@@ -33,6 +33,20 @@ namespace Poloniex_Analyzer
             AllocConsole();
         }
 
+        void MainFormLoad(object sender, EventArgs e)
+        {
+            history = new TradeHistory();
+            PopulateMarketsListView();
+
+            double tp = GetTotalProfit();
+            double thfs = GetTotalHeldForSale();
+            textBoxTotalProfit.Text = tp.ToString();
+            textBoxTotalHeldForSale.Text = thfs.ToString();
+            textBoxTotalDiff.Text = (tp - thfs).ToString();
+        }
+
+        // scans history for all pairs available
+        // only prepares the Pair value, the rest of the values are added in PopulateMarkets()
         List<Market> GetMarkets()
         {
             List<string> uniqueMarkets = new List<string>();
@@ -49,6 +63,28 @@ namespace Poloniex_Analyzer
             return markets;
         }
 
+        // folowup for GetMarkets()
+        void PopulateMarkets()
+        {
+            foreach (Market m in markets)
+            {
+                List<TradeRecord> trades = GetTradesByMarket(m.Pair);
+                m.AmountHeld1 = WaitingForSell1(trades);
+                m.AmountHeld2 = WaitingForSell2(trades);
+                m.PairProfit = SkipLatestBuysProfit(trades);
+                m.NumberTrades = trades.Count;
+            }
+        }
+
+        // fills market list view with data
+        void PopulateMarketsListView()
+        {
+            markets = GetMarkets();
+            PopulateMarkets();
+            listViewMarkets.VirtualListSize = markets.Count;
+        }
+
+        // extracts markets from history by trading pair
         List<TradeRecord> GetTradesByMarket(string pair)
         {
             List<TradeRecord> trades = new List<TradeRecord>();
@@ -62,87 +98,49 @@ namespace Poloniex_Analyzer
             return trades;
         }
 
-        void MainFormLoad(object sender, EventArgs e)
+        // sums up the profit
+        double GetTotalProfit()
         {
-            history = new TradeHistory();
-            PopulateMarketsListView();
-            textBox5.Text = CalcCurrentProfitOptimistic().ToString();
-            textBox2.Text = CalcCurrentProfitScary().ToString();
-
+            double result = 0;
+            foreach(Market m in markets)
+            {
+                result += m.PairProfit;
+            }
+            return result;
         }
 
-
-        void PopulateMarketsListView()
+        // sums up the amount held in altcoins
+        double GetTotalHeldForSale()
         {
-            markets = GetMarkets();
-            PopulateMarkets();
-            listView2.VirtualListSize = markets.Count;
+            double result = 0;
+            foreach (Market m in markets)
+            {
+                result += m.AmountHeld2;
+            }
+            return result;
         }
 
-
-
-
-
+        // reacts on market selection change
         void ListView2SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            if (listView2.SelectedIndices.Count > 0)
+            if (listViewMarkets.SelectedIndices.Count > 0)
             {
-                trades = GetTradesByMarket(markets[listView2.SelectedIndices[0]].Pair);
+                trades = GetTradesByMarket(markets[listViewMarkets.SelectedIndices[0]].Pair);
                 listView1.VirtualListSize = trades.Count;
                 listView1.Refresh();
 
-
-                columnHeader3.Text = "Amount[" + markets[listView2.SelectedIndices[0]].FirstCurrency + "]";
-                columnHeader4.Text = "Price[" + markets[listView2.SelectedIndices[0]].SecondCurrency + "]";
-                columnHeader5.Text = "Total[" + markets[listView2.SelectedIndices[0]].SecondCurrency + "]";
+                columnHeader3.Text = "Amount[" + markets[listViewMarkets.SelectedIndices[0]].FirstCurrency + "]";
+                columnHeader4.Text = "Price[" + markets[listViewMarkets.SelectedIndices[0]].SecondCurrency + "]";
+                columnHeader5.Text = "Total[" + markets[listViewMarkets.SelectedIndices[0]].SecondCurrency + "]";
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("Loading market: " + markets[listView2.SelectedIndices[0]].Pair + " (" + trades.Count.ToString() + " trades)");
+                Console.WriteLine("Loading market: " + markets[listViewMarkets.SelectedIndices[0]].Pair + " (" + trades.Count.ToString() + " trades)");
             }
 
         }
-
-
-
-        double CalcCurrentProfitScary()
-        {
-            double profit = 0;
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("*****");
-            Console.WriteLine("Calculating current profit (including latest buys):");
-            foreach (Market m in markets)
-            {
-                Console.Write("Market (" + m.Pair + ") = ");
-                List<TradeRecord> trades = GetTradesByMarket(m.Pair);
-                double p = CalcProfitUponTrades(trades, 0);
-                Console.WriteLine(p.ToString());
-                profit += p;
-            }
-            Console.WriteLine("Total = " + profit.ToString());
-            Console.WriteLine("*****");
-            return profit;
-        }
-
-        double CalcCurrentProfitOptimistic()
-        {
-            double profit = 0;
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("*****");
-            Console.WriteLine("Calculating current profit:");
-            foreach (Market m in markets)
-            {
-                Console.Write("Market (" + m.Pair + ") = ");
-                List<TradeRecord> trades = GetTradesByMarket(m.Pair);
-                double p = SkipLatestBuysProfit(trades);
-                Console.WriteLine(p.ToString());
-                profit += p;
-            }
-            Console.WriteLine("Total = " + profit.ToString());
-            Console.WriteLine("*****");
-            return profit;
-        }
-
-        double WaitingForSell(List<TradeRecord> trades)
+       
+        // sums up amount for sale in altcoin value
+        double WaitingForSell1(List<TradeRecord> trades)
         {
             double amount = 0;
             for (int i = 0; i < trades.Count; i++)
@@ -157,16 +155,24 @@ namespace Poloniex_Analyzer
             return amount;
         }
 
-        void PopulateMarkets()
+        // sums up amount for sale in basecoin value
+        double WaitingForSell2(List<TradeRecord> trades)
         {
-            foreach (Market m in markets)
+            double amount = 0;
+            for (int i = 0; i < trades.Count; i++)
             {
-                List<TradeRecord> trades = GetTradesByMarket(m.Pair);
-                m.AmountHeld = WaitingForSell(trades);
-                m.PairProfit = SkipLatestBuysProfit(trades);
-                m.NumberTrades = trades.Count;
+                if (trades[i].Type == "Buy")
+                {
+                    amount += trades[i].Total;
+                }
+                else
+                    break;
             }
+            return amount;
         }
+
+
+        //  calculates profit over all trades except latest buy orders
         double SkipLatestBuysProfit(List<TradeRecord> trades)
         {
             for (int i = 0; i < trades.Count; i++)
@@ -182,6 +188,7 @@ namespace Poloniex_Analyzer
         }
 
 
+        // calculates profit over all trades since index 0 up to index n
         double CalcProfitUponTrades(List<TradeRecord> trades, int n)
         {
 
@@ -208,6 +215,7 @@ namespace Poloniex_Analyzer
             return profit;
         }
 
+        // gets visuals for trades list view
         void ListView1RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             try
@@ -255,6 +263,7 @@ namespace Poloniex_Analyzer
             }
         }
 
+        // gets visuals for markets list view
         void ListView2RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             ListViewItem lvi = new ListViewItem();
@@ -262,7 +271,10 @@ namespace Poloniex_Analyzer
 			lvi.UseItemStyleForSubItems = false;
 
             ListViewItem.ListViewSubItem lvsi = new ListViewItem.ListViewSubItem();
-            lvsi.Text = markets[e.ItemIndex].AmountHeld.ToString("0.00000000").PadLeft(16);
+            if (ShowFirstCurrency)
+                lvsi.Text = markets[e.ItemIndex].AmountHeld1.ToString("0.00000000").PadLeft(16) + " " + markets[e.ItemIndex].FirstCurrency;
+            else
+                lvsi.Text = markets[e.ItemIndex].AmountHeld2.ToString("0.00000000").PadLeft(16) + " " + markets[e.ItemIndex].SecondCurrency;
             lvi.SubItems.Add(lvsi);
 
             lvsi = new ListViewItem.ListViewSubItem();
@@ -273,13 +285,28 @@ namespace Poloniex_Analyzer
             lvsi.Text = markets[e.ItemIndex].NumberTrades.ToString().PadLeft(8);
             lvi.SubItems.Add(lvsi);
 
-            if (markets[e.ItemIndex].AmountHeld > 0)
+
+            if (markets[e.ItemIndex].AmountHeld1 > 0)
             {
                 lvi.ForeColor = Color.Red;
+                foreach (ListViewItem.ListViewSubItem si in lvi.SubItems) si.ForeColor = Color.Red;
             }
 
             e.Item = lvi;
 		}
 
-	}
+
+        // selets between altcoin and basecoin representation in market view column showing held for sale amount
+        private bool ShowFirstCurrency = true;
+
+        // GUI reaction for currency switching
+        private void listView2_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (e.Column == 1)
+            {
+                ShowFirstCurrency = !ShowFirstCurrency;
+                listViewMarkets.Refresh();
+            }
+        }
+    }
 }

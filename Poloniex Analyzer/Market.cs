@@ -33,7 +33,9 @@ namespace Poloniex_Analyzer
 
         public double PairProfit;
 
-        public double AmountHeld;
+        public double AmountHeld1;
+
+        public double AmountHeld2;
 
         public long NumberTrades;
 	}

@@ -22,9 +22,9 @@ namespace Poloniex_Analyzer
 		private System.Windows.Forms.ColumnHeader columnHeader5;
 		private System.Windows.Forms.ColumnHeader columnHeader6;
 		private System.Windows.Forms.ColumnHeader columnHeader7;
-		private System.Windows.Forms.TextBox textBox5;
+		private System.Windows.Forms.TextBox textBoxTotalProfit;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.ListView listView2;
+		private System.Windows.Forms.ListView listViewMarkets;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -55,15 +55,17 @@ namespace Poloniex_Analyzer
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBoxTotalProfit = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.listView2 = new System.Windows.Forms.ListView();
+            this.listViewMarkets = new System.Windows.Forms.ListView();
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxTotalDiff = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxTotalHeldForSale = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // listView1
@@ -82,9 +84,9 @@ namespace Poloniex_Analyzer
             this.listView1.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(453, 3);
+            this.listView1.Location = new System.Drawing.Point(479, 3);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(777, 585);
+            this.listView1.Size = new System.Drawing.Size(760, 585);
             this.listView1.TabIndex = 8;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -128,43 +130,44 @@ namespace Poloniex_Analyzer
             // 
             // textBox5
             // 
-            this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox5.Location = new System.Drawing.Point(223, 594);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(150, 20);
-            this.textBox5.TabIndex = 11;
+            this.textBoxTotalProfit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxTotalProfit.Location = new System.Drawing.Point(98, 592);
+            this.textBoxTotalProfit.Name = "textBox5";
+            this.textBoxTotalProfit.Size = new System.Drawing.Size(150, 20);
+            this.textBoxTotalProfit.TabIndex = 11;
             // 
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(160, 597);
+            this.label4.Location = new System.Drawing.Point(12, 595);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(57, 13);
+            this.label4.Size = new System.Drawing.Size(80, 13);
             this.label4.TabIndex = 12;
-            this.label4.Text = "Total profit";
+            this.label4.Text = "Total profit (TP)";
             // 
             // listView2
             // 
-            this.listView2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listViewMarkets.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listViewMarkets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader8,
             this.columnHeader9,
             this.columnHeader10,
             this.columnHeader11});
-            this.listView2.Font = new System.Drawing.Font("Consolas", 8.25F);
-            this.listView2.FullRowSelect = true;
-            this.listView2.GridLines = true;
-            this.listView2.Location = new System.Drawing.Point(2, 3);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(445, 585);
-            this.listView2.TabIndex = 13;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            this.listView2.View = System.Windows.Forms.View.Details;
-            this.listView2.VirtualMode = true;
-            this.listView2.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.ListView2RetrieveVirtualItem);
-            this.listView2.SelectedIndexChanged += new System.EventHandler(this.ListView2SelectedIndexChanged);
+            this.listViewMarkets.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.listViewMarkets.FullRowSelect = true;
+            this.listViewMarkets.GridLines = true;
+            this.listViewMarkets.Location = new System.Drawing.Point(2, 3);
+            this.listViewMarkets.Name = "listView2";
+            this.listViewMarkets.Size = new System.Drawing.Size(471, 585);
+            this.listViewMarkets.TabIndex = 13;
+            this.listViewMarkets.UseCompatibleStateImageBehavior = false;
+            this.listViewMarkets.View = System.Windows.Forms.View.Details;
+            this.listViewMarkets.VirtualMode = true;
+            this.listViewMarkets.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView2_ColumnClick);
+            this.listViewMarkets.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.ListView2RetrieveVirtualItem);
+            this.listViewMarkets.SelectedIndexChanged += new System.EventHandler(this.ListView2SelectedIndexChanged);
             // 
             // columnHeader8
             // 
@@ -174,7 +177,7 @@ namespace Poloniex_Analyzer
             // columnHeader9
             // 
             this.columnHeader9.Text = "Held for sale";
-            this.columnHeader9.Width = 120;
+            this.columnHeader9.Width = 160;
             // 
             // columnHeader10
             // 
@@ -188,32 +191,52 @@ namespace Poloniex_Analyzer
             // 
             // textBox2
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox2.Location = new System.Drawing.Point(597, 594);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(150, 20);
-            this.textBox2.TabIndex = 15;
+            this.textBoxTotalDiff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxTotalDiff.Location = new System.Drawing.Point(696, 592);
+            this.textBoxTotalDiff.Name = "textBox2";
+            this.textBoxTotalDiff.Size = new System.Drawing.Size(150, 20);
+            this.textBoxTotalDiff.TabIndex = 15;
             // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(379, 597);
+            this.label1.Location = new System.Drawing.Point(608, 595);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(212, 13);
+            this.label1.Size = new System.Drawing.Size(82, 13);
             this.label1.TabIndex = 16;
-            this.label1.Text = "including negative numbers from latest buys";
+            this.label1.Text = "TP minus THFS";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(284, 595);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(128, 13);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "Total held for sale (THFS)";
+            // 
+            // textBox1
+            // 
+            this.textBoxTotalHeldForSale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxTotalHeldForSale.Location = new System.Drawing.Point(418, 592);
+            this.textBoxTotalHeldForSale.Name = "textBox1";
+            this.textBoxTotalHeldForSale.Size = new System.Drawing.Size(150, 20);
+            this.textBoxTotalHeldForSale.TabIndex = 17;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1233, 617);
+            this.ClientSize = new System.Drawing.Size(1242, 617);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBoxTotalHeldForSale);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.listView2);
+            this.Controls.Add(this.textBoxTotalDiff);
+            this.Controls.Add(this.listViewMarkets);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.textBoxTotalProfit);
             this.Controls.Add(this.listView1);
             this.Name = "MainForm";
             this.Text = "Poloniex Analyzer";
@@ -227,7 +250,9 @@ namespace Poloniex_Analyzer
         private System.Windows.Forms.ColumnHeader columnHeader9;
         private System.Windows.Forms.ColumnHeader columnHeader10;
         private System.Windows.Forms.ColumnHeader columnHeader11;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBoxTotalDiff;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxTotalHeldForSale;
     }
 }
