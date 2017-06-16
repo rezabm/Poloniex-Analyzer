@@ -38,5 +38,7 @@ namespace Poloniex_Analyzer
         public double AmountHeld2;
 
         public long NumberTrades;
+        
+        public DateTime LastTradeTimestamp;
 	}
 }

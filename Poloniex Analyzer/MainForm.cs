@@ -73,6 +73,10 @@ namespace Poloniex_Analyzer
                 m.AmountHeld2 = WaitingForSell2(trades);
                 m.PairProfit = SkipLatestBuysProfit(trades);
                 m.NumberTrades = trades.Count;
+                if (trades.Count > 0)
+                	m.LastTradeTimestamp = trades[0].Date;
+                else
+                	m.LastTradeTimestamp = new DateTime(0);
             }
         }
 
@@ -282,7 +286,21 @@ namespace Poloniex_Analyzer
             lvi.SubItems.Add(lvsi);
 
             lvsi = new ListViewItem.ListViewSubItem();
-            lvsi.Text = markets[e.ItemIndex].NumberTrades.ToString().PadLeft(8);
+            if (ShowNumOfTrades)
+            	lvsi.Text = markets[e.ItemIndex].NumberTrades.ToString().PadLeft(8);
+            else
+            {
+            	TimeSpan t = (TimeSpan)(DateTime.Now - markets[e.ItemIndex].LastTradeTimestamp);
+            	if (t.TotalSeconds < 60)
+            		lvsi.Text = t.TotalSeconds.ToString("0.00") + " sec";
+            	else if (t.TotalMinutes < 60)
+            		lvsi.Text = t.TotalMinutes.ToString("0.00") + " min";
+            	else if (t.TotalHours < 24)
+            		lvsi.Text = t.TotalHours.ToString("0.00") + " hrs";
+            	else
+            		lvsi.Text = t.TotalDays.ToString("0.00") + " days";
+            	
+            }
             lvi.SubItems.Add(lvsi);
 
 
@@ -298,15 +316,26 @@ namespace Poloniex_Analyzer
 
         // selets between altcoin and basecoin representation in market view column showing held for sale amount
         private bool ShowFirstCurrency = true;
-
+        private bool ShowNumOfTrades = true;
+        
         // GUI reaction for currency switching
         private void listView2_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             if (e.Column == 1)
             {
                 ShowFirstCurrency = !ShowFirstCurrency;
+                columnHeader9.Text = ShowFirstCurrency? "Held for sale A" : "Held for sale B";
                 listViewMarkets.Refresh();
             }
+            
+            if (e.Column == 3)
+            {
+            	ShowNumOfTrades = !ShowNumOfTrades;
+            	columnHeader11.Text = ShowNumOfTrades? "# Trades" : "Last trade";
+            	listViewMarkets.Refresh();
+            }
         }
+        
+        
     }
 }
