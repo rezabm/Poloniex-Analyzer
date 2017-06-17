@@ -40,9 +40,18 @@ namespace Poloniex_Analyzer
 
             double tp = GetTotalProfit();
             double thfs = GetTotalHeldForSale();
-            textBoxTotalProfit.Text = tp.ToString();
-            textBoxTotalHeldForSale.Text = thfs.ToString();
-            textBoxTotalDiff.Text = (tp - thfs).ToString();
+            textBoxTotalProfit.Text = tp.ToString("0.00000000").PadLeft(16);
+            textBoxTotalHeldForSale.Text = thfs.ToString("0.00000000").PadLeft(16);
+            textBoxTotalDiff.Text = (tp - thfs).ToString("0.00000000").PadLeft(16);
+            
+             
+            if (history.History.Count > 0)
+            {
+            	DateTime d = history.History[history.History.Count-1].Date;
+            	TimeSpan t = (TimeSpan)(DateTime.Now - d);
+            	
+            	this.Text += " (" + history.History.Count.ToString() + " trades in last " + ((int)t.TotalDays).ToString() + " days)";
+            }
         }
 
         // scans history for all pairs available
