@@ -34,18 +34,18 @@ namespace Poloniex_Analyzer
 						// add only valid lines
 						TradeRecord trade = new TradeRecord(line);
 						History.Add(trade);
-						Console.ForegroundColor = ConsoleColor.DarkGreen;
-						Console.Write("+++ ");
 					}
 					catch (Exception e)
 					{
-						Console.ForegroundColor = ConsoleColor.Red;
-						Console.WriteLine("TradeHistory() constructor: " + e.Message);
-						Console.ForegroundColor = ConsoleColor.Red;
-						Console.Write("--- ");
+						if (History.Count == 0)
+						{
+							Console.ForegroundColor = ConsoleColor.DarkCyan;
+							Console.WriteLine("CSV header: " + line);
+						}
 					}
-					Console.WriteLine(line);
 				}
+				Console.ForegroundColor = ConsoleColor.DarkGreen;
+				Console.WriteLine("Loaded " + History.Count.ToString() + " lines.");
 				file.Close();
 			}
 		}

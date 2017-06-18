@@ -47,6 +47,9 @@ namespace Poloniex_Analyzer
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.listView1 = new System.Windows.Forms.ListView();
 			this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
@@ -66,14 +69,23 @@ namespace Poloniex_Analyzer
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.textBoxTotalHeldForSale = new System.Windows.Forms.TextBox();
+			this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.myTabControl1 = new Poloniex_Analyzer.MyTabControl();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.tabPage4 = new System.Windows.Forms.TabPage();
+			((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+			this.panel1.SuspendLayout();
+			this.myTabControl1.SuspendLayout();
+			this.tabPage3.SuspendLayout();
+			this.tabPage4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// listView1
 			// 
-			this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
 			this.listView1.BackColor = System.Drawing.Color.LightGoldenrodYellow;
+			this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
 			this.columnHeader1,
 			this.columnHeader2,
@@ -82,12 +94,13 @@ namespace Poloniex_Analyzer
 			this.columnHeader5,
 			this.columnHeader6,
 			this.columnHeader7});
+			this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listView1.Font = new System.Drawing.Font("Consolas", 8.25F);
 			this.listView1.FullRowSelect = true;
 			this.listView1.GridLines = true;
-			this.listView1.Location = new System.Drawing.Point(483, 2);
+			this.listView1.Location = new System.Drawing.Point(486, 3);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(758, 584);
+			this.listView1.Size = new System.Drawing.Size(801, 559);
 			this.listView1.TabIndex = 8;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
@@ -131,23 +144,22 @@ namespace Poloniex_Analyzer
 			// 
 			// textBoxTotalProfit
 			// 
-			this.textBoxTotalProfit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.textBoxTotalProfit.BackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.textBoxTotalProfit.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.textBoxTotalProfit.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.textBoxTotalProfit.Location = new System.Drawing.Point(198, 596);
+			this.textBoxTotalProfit.Location = new System.Drawing.Point(198, 12);
 			this.textBoxTotalProfit.Name = "textBoxTotalProfit";
 			this.textBoxTotalProfit.ReadOnly = true;
 			this.textBoxTotalProfit.Size = new System.Drawing.Size(150, 19);
 			this.textBoxTotalProfit.TabIndex = 11;
+			this.textBoxTotalProfit.TabStop = false;
 			// 
 			// label4
 			// 
-			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.label4.ForeColor = System.Drawing.Color.LimeGreen;
-			this.label4.Location = new System.Drawing.Point(12, 596);
+			this.label4.Location = new System.Drawing.Point(12, 12);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(180, 19);
 			this.label4.TabIndex = 12;
@@ -155,20 +167,20 @@ namespace Poloniex_Analyzer
 			// 
 			// listViewMarkets
 			// 
-			this.listViewMarkets.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left)));
 			this.listViewMarkets.BackColor = System.Drawing.Color.LightGoldenrodYellow;
+			this.listViewMarkets.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.listViewMarkets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
 			this.columnHeader8,
 			this.columnHeader9,
 			this.columnHeader10,
 			this.columnHeader11});
+			this.listViewMarkets.Dock = System.Windows.Forms.DockStyle.Left;
 			this.listViewMarkets.Font = new System.Drawing.Font("Consolas", 8.25F);
 			this.listViewMarkets.FullRowSelect = true;
 			this.listViewMarkets.GridLines = true;
-			this.listViewMarkets.Location = new System.Drawing.Point(1, 2);
+			this.listViewMarkets.Location = new System.Drawing.Point(3, 3);
 			this.listViewMarkets.Name = "listViewMarkets";
-			this.listViewMarkets.Size = new System.Drawing.Size(480, 584);
+			this.listViewMarkets.Size = new System.Drawing.Size(480, 559);
 			this.listViewMarkets.TabIndex = 13;
 			this.listViewMarkets.UseCompatibleStateImageBehavior = false;
 			this.listViewMarkets.View = System.Windows.Forms.View.Details;
@@ -199,23 +211,22 @@ namespace Poloniex_Analyzer
 			// 
 			// textBoxTotalDiff
 			// 
-			this.textBoxTotalDiff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.textBoxTotalDiff.BackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.textBoxTotalDiff.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.textBoxTotalDiff.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.textBoxTotalDiff.Location = new System.Drawing.Point(959, 596);
+			this.textBoxTotalDiff.Location = new System.Drawing.Point(959, 12);
 			this.textBoxTotalDiff.Name = "textBoxTotalDiff";
 			this.textBoxTotalDiff.ReadOnly = true;
 			this.textBoxTotalDiff.Size = new System.Drawing.Size(150, 19);
 			this.textBoxTotalDiff.TabIndex = 15;
+			this.textBoxTotalDiff.TabStop = false;
 			// 
 			// label1
 			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.label1.ForeColor = System.Drawing.Color.LimeGreen;
-			this.label1.Location = new System.Drawing.Point(809, 596);
+			this.label1.Location = new System.Drawing.Point(809, 12);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(144, 19);
 			this.label1.TabIndex = 16;
@@ -223,11 +234,10 @@ namespace Poloniex_Analyzer
 			// 
 			// label2
 			// 
-			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label2.AutoSize = true;
 			this.label2.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.label2.ForeColor = System.Drawing.Color.LimeGreen;
-			this.label2.Location = new System.Drawing.Point(368, 596);
+			this.label2.Location = new System.Drawing.Point(368, 12);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(261, 19);
 			this.label2.TabIndex = 18;
@@ -235,35 +245,113 @@ namespace Poloniex_Analyzer
 			// 
 			// textBoxTotalHeldForSale
 			// 
-			this.textBoxTotalHeldForSale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.textBoxTotalHeldForSale.BackColor = System.Drawing.Color.LightGoldenrodYellow;
 			this.textBoxTotalHeldForSale.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.textBoxTotalHeldForSale.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.textBoxTotalHeldForSale.Location = new System.Drawing.Point(635, 596);
+			this.textBoxTotalHeldForSale.Location = new System.Drawing.Point(635, 12);
 			this.textBoxTotalHeldForSale.Name = "textBoxTotalHeldForSale";
 			this.textBoxTotalHeldForSale.ReadOnly = true;
 			this.textBoxTotalHeldForSale.Size = new System.Drawing.Size(150, 19);
 			this.textBoxTotalHeldForSale.TabIndex = 17;
+			this.textBoxTotalHeldForSale.TabStop = false;
+			// 
+			// chart1
+			// 
+			chartArea1.Name = "ChartArea1";
+			this.chart1.ChartAreas.Add(chartArea1);
+			this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
+			legend1.Name = "Legend1";
+			this.chart1.Legends.Add(legend1);
+			this.chart1.Location = new System.Drawing.Point(3, 3);
+			this.chart1.Name = "chart1";
+			series1.ChartArea = "ChartArea1";
+			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+			series1.Legend = "Legend1";
+			series1.Name = "Series1";
+			this.chart1.Series.Add(series1);
+			this.chart1.Size = new System.Drawing.Size(1284, 559);
+			this.chart1.TabIndex = 19;
+			this.chart1.Text = "chart1";
+			// 
+			// panel1
+			// 
+			this.panel1.Controls.Add(this.label4);
+			this.panel1.Controls.Add(this.textBoxTotalProfit);
+			this.panel1.Controls.Add(this.label2);
+			this.panel1.Controls.Add(this.textBoxTotalDiff);
+			this.panel1.Controls.Add(this.textBoxTotalHeldForSale);
+			this.panel1.Controls.Add(this.label1);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.panel1.Location = new System.Drawing.Point(0, 597);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(1298, 46);
+			this.panel1.TabIndex = 21;
+			// 
+			// myTabControl1
+			// 
+			this.myTabControl1.Controls.Add(this.tabPage3);
+			this.myTabControl1.Controls.Add(this.tabPage4);
+			this.myTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.myTabControl1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
+			this.myTabControl1.Location = new System.Drawing.Point(0, 0);
+			this.myTabControl1.Multiline = true;
+			this.myTabControl1.Name = "myTabControl1";
+			this.myTabControl1.Padding = new System.Drawing.Point(0, 0);
+			this.myTabControl1.SelectedIndex = 0;
+			this.myTabControl1.Size = new System.Drawing.Size(1298, 597);
+			this.myTabControl1.TabIndex = 22;
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.BackColor = System.Drawing.Color.Black;
+			this.tabPage3.Controls.Add(this.listView1);
+			this.tabPage3.Controls.Add(this.panel2);
+			this.tabPage3.Controls.Add(this.listViewMarkets);
+			this.tabPage3.Location = new System.Drawing.Point(4, 28);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage3.Size = new System.Drawing.Size(1290, 565);
+			this.tabPage3.TabIndex = 0;
+			this.tabPage3.Text = "Overview";
+			// 
+			// panel2
+			// 
+			this.panel2.BackColor = System.Drawing.Color.Black;
+			this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
+			this.panel2.Location = new System.Drawing.Point(483, 3);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(3, 559);
+			this.panel2.TabIndex = 14;
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.BackColor = System.Drawing.Color.Black;
+			this.tabPage4.Controls.Add(this.chart1);
+			this.tabPage4.Location = new System.Drawing.Point(4, 28);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage4.Size = new System.Drawing.Size(1290, 565);
+			this.tabPage4.TabIndex = 1;
+			this.tabPage4.Text = "Profit chart";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(1242, 624);
-			this.Controls.Add(this.label2);
-			this.Controls.Add(this.textBoxTotalHeldForSale);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.textBoxTotalDiff);
-			this.Controls.Add(this.listViewMarkets);
-			this.Controls.Add(this.label4);
-			this.Controls.Add(this.textBoxTotalProfit);
-			this.Controls.Add(this.listView1);
+			this.ClientSize = new System.Drawing.Size(1298, 643);
+			this.Controls.Add(this.myTabControl1);
+			this.Controls.Add(this.panel1);
 			this.Name = "MainForm";
 			this.Text = "Poloniex Analyzer";
 			this.Load += new System.EventHandler(this.MainFormLoad);
+			((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
+			this.myTabControl1.ResumeLayout(false);
+			this.tabPage3.ResumeLayout(false);
+			this.tabPage4.ResumeLayout(false);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -275,5 +363,11 @@ namespace Poloniex_Analyzer
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxTotalHeldForSale;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.Panel panel1;
+        private Poloniex_Analyzer.MyTabControl myTabControl1;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Panel panel2;
     }
 }

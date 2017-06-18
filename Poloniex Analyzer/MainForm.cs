@@ -37,6 +37,7 @@ namespace Poloniex_Analyzer
         {
             history = new TradeHistory();
             PopulateMarketsListView();
+            GeneratePieChart();
 
             double tp = GetTotalProfit();
             double thfs = GetTotalHeldForSale();
@@ -95,6 +96,29 @@ namespace Poloniex_Analyzer
             markets = GetMarkets();
             PopulateMarkets();
             listViewMarkets.VirtualListSize = markets.Count;
+        }
+        
+        void GeneratePieChart()
+        {
+        	Dictionary<string, double> tags = new Dictionary<string, double>() ;
+        	
+        	foreach (Market m in markets)
+        	{
+        		if (m.PairProfit > 0)
+        			tags.Add(m.FirstCurrency + "(" + m.PairProfit.ToString("0.0000") + ")", m.PairProfit);
+        	}
+        	
+    		chart1.Series[0].Points.Clear();
+        	chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+        	chart1.Legends[0].Enabled = false;
+        	chart1.Series[0]["PieLabelStyle"] = "Outside";
+			chart1.Series[0]["PieLineColor"] = "Black";
+        			
+        	foreach (string tagname in tags.Keys)
+        	{
+        		chart1.Series[0].Points.AddXY(tagname, tags[tagname]);
+        		chart1.Series[0].IsValueShownAsLabel = false;
+        	}
         }
 
         // extracts markets from history by trading pair
@@ -301,13 +325,13 @@ namespace Poloniex_Analyzer
             {
             	TimeSpan t = (TimeSpan)(DateTime.Now - markets[e.ItemIndex].LastTradeTimestamp);
             	if (t.TotalSeconds < 60)
-            		lvsi.Text = t.TotalSeconds.ToString("0.00") + " sec";
+            		lvsi.Text = t.TotalSeconds.ToString("0") + " sec";
             	else if (t.TotalMinutes < 60)
-            		lvsi.Text = t.TotalMinutes.ToString("0.00") + " min";
+            		lvsi.Text = t.TotalMinutes.ToString("0") + " min";
             	else if (t.TotalHours < 24)
-            		lvsi.Text = t.TotalHours.ToString("0.00") + " hrs";
+            		lvsi.Text = t.TotalHours.ToString("0") + " hrs";
             	else
-            		lvsi.Text = t.TotalDays.ToString("0.00") + " days";
+            		lvsi.Text = t.TotalDays.ToString("0") + " days";
             	
             }
             lvi.SubItems.Add(lvsi);
